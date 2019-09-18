@@ -42,11 +42,11 @@ public class RestoranController {
     }
 
     //URL mapping view
-    @RequestMapping("/restoran/view")
+    @RequestMapping(path = "/restoran/view")
     public String view(
             //Request Parameter untuk dipass
             @RequestParam(value = "idRestoran") String idRestoran, Model model
-//            @PathVariable()
+//            @PathVariable("id") String idLestoran
             ) {
 
         //Mengambil objek RestoranModel yang dituju
@@ -71,5 +71,29 @@ public class RestoranController {
 
         //Return view template
         return "viewall-restoran";
+    }
+
+    //URL mapping delete
+    @RequestMapping("/restoran/delete/id/{idRestoran}")
+    public String delete(
+            //Request parameter untuk dipass
+            @PathVariable("idRestoran") String idRestoran, Model model
+            ) {
+
+        //Mengambil semua objek RestoranModel yang ada
+        List<RestoranModel> listRestoran = restoranService.getRestoranList();
+
+        //Mencari restoran dengan id sesuai input
+        for(int i = 0; i < listRestoran.size(); i++) {
+            if(listRestoran.get(i).getIdRestoran().equals(idRestoran)) {
+                listRestoran.remove(i);
+            }
+        }
+
+        //Add variabel id restoran ke "idRestoran" untuk dirender
+        model.addAttribute("idRestoran", idRestoran);
+
+        //Return view template
+        return "delete-restoran";
     }
 }
