@@ -38,7 +38,7 @@ public class RestoranServiceImpl implements RestoranService{
         try{
             targetRestoran.setNama(restoranModel.getNama());
             targetRestoran.setAlamat(restoranModel.getAlamat());
-            targetRestoran.getNomorTelepon(restoranModel.getNomorTelepon());
+            targetRestoran.setNomorTelepon(restoranModel.getNomorTelepon());
             restoranDb.save(targetRestoran);
             return targetRestoran;
         } catch (NullPointerException nullException){

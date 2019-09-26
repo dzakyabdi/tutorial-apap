@@ -83,7 +83,7 @@ public class MenuModel implements Serializable {
     @Column(name = "deskripsi", nullable = false)
     private String deskripsi;
 
-    @ManyToMany(fetch = FetchType.EAGER, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "restoranId", referencedColumnName = "idRestoran", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore

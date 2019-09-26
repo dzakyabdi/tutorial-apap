@@ -55,19 +55,8 @@ public class RestoranModel implements Serializable {
         this.listMenu = listMenu;
     }
 
-    public RestoranModel(Long idRestoran, String nama, String alamat, Integer nomorTelepon) {
-        this.idRestoran = idRestoran;
-        this.nama = nama;
-        this.alamat = alamat;
-        this.nomorTelepon = nomorTelepon;
-    }
-
-    public String getIdRestoran() {
+    public Long getIdRestoran() {
         return idRestoran;
-    }
-
-    public void setIdRestoran(String idRestoran) {
-        this.idRestoran = idRestoran;
     }
 
     public String getNama() {

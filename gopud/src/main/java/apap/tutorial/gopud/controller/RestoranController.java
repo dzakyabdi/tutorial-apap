@@ -23,7 +23,7 @@ public class RestoranController {
     private MenuService menuService;
 
     @RequestMapping("/")
-    public String home() { return "home" };
+    public String home() { return "home"; }
 
     //URL mapping yang digunakan untuk mengakses halaman add restoran
     @RequestMapping(value = "/restoran/add", method = RequestMethod.GET)
@@ -34,7 +34,7 @@ public class RestoranController {
     }
 
     //URL Mapping yang digunakan untuk submit form yang telah anda masukkan pada halaman add restoran
-    @RequestMapping(value = "/restoran/add", method = RequestMethod.POST);
+    @RequestMapping(value = "/restoran/add", method = RequestMethod.POST)
     public String addRestoranSubmit(@ModelAttribute RestoranModel restoran, Model model) {
         restoranService.addRestoran(restoran);
         model.addAttribute("namaResto", restoran.getNama());
@@ -79,47 +79,23 @@ public class RestoranController {
         return "change-restoran";
     }
 
-    //URL mapping add
-    @RequestMapping("/restoran/add")
-    public String add(
-            //Request Parameter untuk dipass
-            @RequestParam(value = "idRestoran", required = true) String idRestoran,
-            @RequestParam(value = "nama", required = true) String nama,
-            @RequestParam(value = "alamat", required = true) String alamat,
-            @RequestParam(value = "nomorTelepon", required = true) Integer nomorTelepon,
-            Model model
-            ) {
-
-        //Membuat objek RestoranModel
-        RestoranModel restoran = new RestoranModel(idRestoran, nama, alamat, nomorTelepon);
-
-        //Memanggil service addRestoran
-        restoranService.addRestoran(restoran);
-
-        //Add variabel nama restoran ke "namaResto" untuk dirender
-        model.addAttribute("namaResto", nama);
-
-        //Return view template
-        return "add-restoran";
-    }
-
-    //URL mapping view
-    @RequestMapping(path = "/restoran/view")
-    public String view(
-            //Request Parameter untuk dipass
-            @RequestParam(value = "idRestoran") String idRestoran, Model model
-//            @PathVariable("id") String idLestoran
-            ) {
-
-        //Mengambil objek RestoranModel yang dituju
-        RestoranModel restoran = restoranService.getRestoranByIdRestoran(idRestoran);
-
-        //Add model restoran ke "resto" untuk dirender
-        model.addAttribute("resto", restoran);
-
-        //Return view template
-        return "view-restoran";
-    }
+//    //URL mapping view
+//    @RequestMapping(path = "/restoran/view")
+//    public String view(
+//            //Request Parameter untuk dipass
+//            @RequestParam(value = "idRestoran") Long idRestoran, Model model
+////            @PathVariable("id") String idLestoran
+//            ) {
+//
+//        //Mengambil objek RestoranModel yang dituju
+//        RestoranModel restoran = restoranService.getRestoranByIdRestoran(idRestoran);
+//
+//        //Add model restoran ke "resto" untuk dirender
+//        model.addAttribute("resto", restoran);
+//
+//        //Return view template
+//        return "view-restoran";
+//    }
 
     //URL mapping viewAll
     @RequestMapping("/restoran/viewall")
