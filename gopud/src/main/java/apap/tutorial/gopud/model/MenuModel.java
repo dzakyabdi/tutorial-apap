@@ -13,6 +13,34 @@ import java.math.BigInteger;
 @Entity
 @Table(name = "menu")
 public class MenuModel implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @NotNull
+    @Size(max = 20)
+    @Column(name = "nama", nullable = false)
+    private String nama;
+
+    @NotNull
+    @Column(name = "harga", nullable = false)
+    private BigInteger harga;
+
+    @NotNull
+    @Column(name = "durasiMasak", nullable = false)
+    private Integer durasiMasak;
+
+    @NotNull
+    @Size(max = 50)
+    @Column(name = "deskripsi", nullable = false)
+    private String deskripsi;
+
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "restoranId", referencedColumnName = "idRestoran", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
+    private RestoranModel restoran;
+
     public Long getId() {
         return id;
     }
@@ -60,32 +88,4 @@ public class MenuModel implements Serializable {
     public void setRestoran(RestoranModel restoran) {
         this.restoran = restoran;
     }
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @NotNull
-    @Size(max = 20)
-    @Column(name = "nama", nullable = false)
-    private String nama;
-
-    @NotNull
-    @Column(name = "harga", nullable = false)
-    private BigInteger harga;
-
-    @NotNull
-    @Column(name = "durasiMasak", nullable = false)
-    private Integer durasiMasak;
-
-    @NotNull
-    @Size(max = 50)
-    @Column(name = "deskripsi", nullable = false)
-    private String deskripsi;
-
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "restoranId", referencedColumnName = "idRestoran", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
-    private RestoranModel restoran;
 }

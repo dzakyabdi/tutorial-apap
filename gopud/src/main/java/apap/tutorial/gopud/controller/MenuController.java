@@ -34,7 +34,7 @@ public class MenuController {
     }
 
     @RequestMapping(value = "menu/add", method = RequestMethod.POST)
-    private String addProduuctSubmit(@ModelAttribute MenuModel menu, Model model) {
+    private String addProductSubmit(@ModelAttribute MenuModel menu, Model model) {
         menuService.addMenu(menu);
 
         model.addAttribute("nama", menu.getNama());

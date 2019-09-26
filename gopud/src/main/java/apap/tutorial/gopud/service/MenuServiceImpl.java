@@ -20,7 +20,7 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public List<MenuModel> findAllMenuByIdRestoran(long idRestoran) {
+    public List<MenuModel> findAllMenuByIdRestoran(Long idRestoran) {
         return menuDb.findByRestoranIdRestoran(idRestoran);
     }
 
