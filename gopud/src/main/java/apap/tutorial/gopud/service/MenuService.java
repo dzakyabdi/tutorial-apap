@@ -7,4 +7,6 @@ import java.util.List;
 public interface MenuService {
     void addMenu(MenuModel menu);
     List<MenuModel> findAllMenuByIdRestoran(Long idRestoran);
+
+    MenuModel getMenuById(Long id);
 }

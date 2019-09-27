@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -22,6 +23,11 @@ public class MenuServiceImpl implements MenuService {
     @Override
     public List<MenuModel> findAllMenuByIdRestoran(Long idRestoran) {
         return menuDb.findByRestoranIdRestoran(idRestoran);
+    }
+
+    @Override
+    public Optional<MenuModel> getMenuById(Long id) {
+        return menuDb.findById(id);
     }
 
 //    @Override
