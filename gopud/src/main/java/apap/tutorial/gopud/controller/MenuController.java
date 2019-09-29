@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.util.Optional;
+
 @Controller
 public class MenuController {
     @Autowired
@@ -43,20 +45,20 @@ public class MenuController {
     }
 
     //API yang digunakan untuk menuju halaman form change menu
-    @RequestMapping(value = "restoran/menu/change/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "menu/change/{id}", method = RequestMethod.GET)
     public String changeMenuFormPage(@PathVariable Long id, Model model) {
         //Memanggil existing data menu
-        MenuModel newMenu = menuService.getMenuById(id);
-        model.addAttribute("menu", newMenu);
+        Optional<MenuModel> menu = menuService.getMenuById(id);
+        model.addAttribute("menu", menu);
         return "form-change-menu";
     }
 
-    //API yang digunakan untuk submit form change restoran
-    @RequestMapping(value = "restoran/change/{idRestoran}", method = RequestMethod.POST)
-    public String changeRestoranFormSubmit(@PathVariable Long idRestoran, @ModelAttribute RestoranModel restoran, Model model) {
-        MenuModel newMenuData = restoranService.changeRestoran(restoran);
-        model.addAttribute("restoran", newRestoranData);
+    //API yang digunakan untuk submit form change menu
+    @RequestMapping(value = "menu/change/{id}", method = RequestMethod.POST)
+    public String changeMenuFormSubmit(@PathVariable Long id, @ModelAttribute MenuModel menu, Model model) {
+        MenuModel newMenuData = menuService.changeMenu(menu);
+        model.addAttribute("newMenuData", newMenuData);
 
-        return "change-restoran";
+        return "change-menu";
     }
 }

@@ -30,8 +30,20 @@ public class MenuServiceImpl implements MenuService {
         return menuDb.findById(id);
     }
 
-//    @Override
-//    public List<MenuModel> findAllMenuByIdRestoran(Long idRestoran) {
-//        return menuDb.findByRestoranIdRestoran(idRestoran);
-//    }
+    @Override
+    public MenuModel changeMenu(MenuModel menuModel) {
+        // mengambil object restoran yang ingin diubah
+        MenuModel targetMenu = menuDb.findById(menuModel.getId()).get();
+
+        try{
+            targetMenu.setNama(targetMenu.getNama());
+            targetMenu.setHarga(targetMenu.getHarga());
+            targetMenu.setDurasiMasak(targetMenu.getDurasiMasak());
+            targetMenu.setDeskripsi(targetMenu.getDeskripsi());
+            menuDb.save(targetMenu);
+            return targetMenu;
+        } catch (NullPointerException nullException){
+            return null;
+        }
+    }
 }

@@ -2,26 +2,27 @@
 <html xmlns:th="http://thymeleaf.org">
 
 <head>
-    <title> Add Menu </title>
+    <title> Change Data Menu </title>
 </head>
 
 <body>
-
-<h3> Ubah Produk </h3>
-<form th:action="@{/menu/change/{id}(id=${newMenu.id})}" th:object="${menu}" method="POST">
-    <input type="hidden" th:field="*{restoran}" />
+<h2> Change Data Menu </h2>
+<form th:action="@{/menu/change/{id}(id=${newMenuData.id})}" th:object="${newMenuData}" method="POST">
+    <input type="hidden" th:field="${newMenuData.id}" />
     Nama: <br>
-    <input type="text" name="nama" />
-    <br>
-    Deskripsi: <br>
-    <input type="text" name="deskripsi" />
+    <input type="text" name="nama" th:value="${newMenuData.nama}"/>
     <br>
     Harga: <br>
-    <input type="number" name="harga" />
+    <input type="number" name="harga" th:value="${newMenuData.harga}"/>
     <br>
     durasiMasak (menit): <br>
-    <input type="number" name="durasiMasak" />
+    <input type="number" name="durasiMasak" th:value="${newMenuData.durasiMasak}"/>
     <br>
+    Deskripsi: <br>
+    <input type="text" name="deskripsi" th:value="${newMenuData.deskripsi}"/>
+    <br>
+
+    <br><br>
     <button type="submit"> Submit </button>
 </form>
 </body>
