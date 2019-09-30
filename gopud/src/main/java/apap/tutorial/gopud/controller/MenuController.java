@@ -48,7 +48,7 @@ public class MenuController {
     @RequestMapping(value = "menu/change/{id}", method = RequestMethod.GET)
     public String changeMenuFormPage(@PathVariable Long id, Model model) {
         //Memanggil existing data menu
-        Optional<MenuModel> menu = menuService.getMenuById(id);
+        MenuModel menu = menuService.getMenuById(id).get();
         model.addAttribute("menu", menu);
         return "form-change-menu";
     }
@@ -57,6 +57,7 @@ public class MenuController {
     @RequestMapping(value = "menu/change/{id}", method = RequestMethod.POST)
     public String changeMenuFormSubmit(@PathVariable Long id, @ModelAttribute MenuModel menu, Model model) {
         MenuModel newMenuData = menuService.changeMenu(menu);
+        if (newMenuData == null) return "test";
         model.addAttribute("newMenuData", newMenuData);
 
         return "change-menu";

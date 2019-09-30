@@ -7,19 +7,20 @@
 
 <body>
 <h2> Change Data Menu </h2>
-<form th:action="@{/menu/change/{id}(id=${newMenuData.id})}" th:object="${newMenuData}" method="POST">
-    <input type="hidden" th:field="${newMenuData.id}" />
+<!--<form th:action="@{/menu/change/{id}(id=${newMenuData.id})}" th:object="${newMenuData}" method="POST">-->
+<form th:action="'/menu/change/' + ${menu.id}" th:object="${menu}" method="POST">
+    <input type="hidden" th:field="${menu.id}" />
     Nama: <br>
-    <input type="text" name="nama" th:value="${newMenuData.nama}"/>
+    <input type="text" name="nama" th:value="${menu.nama}"/>
     <br>
     Harga: <br>
-    <input type="number" name="harga" th:value="${newMenuData.harga}"/>
+    <input type="number" name="harga" th:value="${menu.harga}"/>
     <br>
     durasiMasak (menit): <br>
-    <input type="number" name="durasiMasak" th:value="${newMenuData.durasiMasak}"/>
+    <input type="number" name="durasiMasak" th:value="${menu.durasiMasak}"/>
     <br>
     Deskripsi: <br>
-    <input type="text" name="deskripsi" th:value="${newMenuData.deskripsi}"/>
+    <input type="text" name="deskripsi" th:value="${menu.deskripsi}"/>
     <br>
 
     <br><br>
