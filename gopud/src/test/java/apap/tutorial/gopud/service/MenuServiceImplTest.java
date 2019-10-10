@@ -22,9 +22,11 @@ import static org.mockito.Mockito.*;
 public class MenuServiceImplTest {
     @InjectMocks
     MenuService menuService = new MenuServiceImpl();
+    RestoranService restoranService = new RestoranServiceImpl();
 
     @Mock
     MenuDb menuDb;
+    RestoranDb restoranDb;
 
     @Test
     public void whenAddValidMenuItShouldCallRestoranRepositorySave() {
@@ -52,24 +54,32 @@ public class MenuServiceImplTest {
     @Test
     public void whenGetListMenuOrderByHargaAscCalledItShouldReturnAllMenu() {
         RestoranModel newRestoran = new RestoranModel();
-        RestoranService restoranService = new RestoranServiceImpl();
-
-        newRestoran.setNama("mekdi");
-        newRestoran.setAlamat("pacil");
-        newRestoran.setNomorTelepon(14045);
-        newRestoran.setIdRestoran(71L);
-//        newRestoran.setListMenu(new ArrayList<>());
-        restoranService.addRestoran(newRestoran);
+        List<MenuModel> newListMenuDatabase = new ArrayList<>();
+        int harga = 5000;
         for (int loopTimes = 4; loopTimes > 0; loopTimes--) {
-//            restoranService.getRestoranList().add(new MenuModel());
-//            newRestoran.getListMenu().add(new MenuModel());
-            menuService.addMenu(new MenuModel());
+            MenuModel newMenu = new MenuModel();
+            newMenu.setHarga(BigInteger.valueOf(harga++));
+            newListMenuDatabase.add(newMenu);
         }
 
-
-        List<MenuModel> listMenuFromServiceCall = menuDb.findByRestoranIdRestoranOrderByHarga(71L);
-        assertEquals(0, listMenuFromServiceCall.size());
-        verify(menuDb, times(1)).findAll();
+        when(menuService.getListMenuOrderByHargaAsc(newRestoran.getIdRestoran())).thenReturn(newListMenuDatabase);
+        List<MenuModel> dataFromServiceCall = menuService.getListMenuOrderByHargaAsc(newRestoran.getIdRestoran());
+        int tesharga = 5000;
+        for(int i = 0; i < 4; i++) {
+            assertEquals(BigInteger.valueOf(tesharga++), dataFromServiceCall.get(i).getHarga());
+        }
     }
 
+    @Test
+    public void whenFindAllMenuByIdRestoranCalledItShouldReturnAllMenu() {
+        RestoranModel restoran = new RestoranModel();
+        List<MenuModel> allMenuFromOneRestoranInDataBase = new ArrayList<>();
+        for (int loopTimes = 3; loopTimes > 0; loopTimes--) {
+            allMenuFromOneRestoranInDataBase.add(new MenuModel());
+        }
+        when(menuService.findAllMenuByIdRestoran(restoran.getIdRestoran())).thenReturn(allMenuFromOneRestoranInDataBase);
+        List<MenuModel> dataFromServiceCall = menuService.findAllMenuByIdRestoran(restoran.getIdRestoran());
+        assertEquals(3, dataFromServiceCall.size());
+//        verify(menuDb, times(1)).findAll();
+    }
 }

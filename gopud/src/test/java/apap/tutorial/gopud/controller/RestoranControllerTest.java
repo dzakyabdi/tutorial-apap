@@ -107,4 +107,12 @@ public class RestoranControllerTest {
                 .andExpect(MockMvcResultMatchers.view().name("add-restoran"))
                 .andExpect(model().attribute("namaResto", is(nama)));
     }
+
+    @Test
+    public void whenViewRestoranAccessItShouldShowRestoranData() {
+        mockMvc.perform(post("/restoran/view"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(content().string(Matchers.containsString("Informasi Restoran")))
+                .andExpect()
+    }
 }
