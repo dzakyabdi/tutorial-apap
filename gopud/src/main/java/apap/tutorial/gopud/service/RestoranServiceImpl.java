@@ -41,8 +41,19 @@ public class RestoranServiceImpl implements RestoranService{
             targetRestoran.setNomorTelepon(restoranModel.getNomorTelepon());
             restoranDb.save(targetRestoran);
             return targetRestoran;
-        } catch (NullPointerException nullException){
+        } catch (NullPointerException nullException) {
             return null;
+        }
+    }
+
+    @Override
+    public void deleteRestoran(Long idRestoran) {
+        RestoranModel restoran = getRestoranByIdRestoran(idRestoran).get();
+        if(restoran.getListMenu().size()==0){
+            restoranDb.delete(restoran);
+        }else{
+            UnsupportedOperationException unsupportedOperationException = new UnsupportedOperationException();
+            throw unsupportedOperationException;
         }
     }
 }

@@ -1,10 +1,14 @@
 package apap.tutorial.gopud.model;
 
+import javax.annotation.processing.Generated;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.List;
+
+import apap.tutorial.gopud.model.MenuModel;
+import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @Table(name="restoran")
@@ -16,7 +20,7 @@ public class RestoranModel implements Serializable {
 
     @NotNull
     @Size(max = 20)
-    @Column(name = "nama", nullable = false)
+    @Column(name="nama", nullable = false)
     private String nama;
 
     @NotNull
@@ -35,28 +39,12 @@ public class RestoranModel implements Serializable {
     @OneToMany(mappedBy = "restoran", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<MenuModel> listMenu;
 
-    public void setIdRestoran(Long idRestoran) {
-        this.idRestoran = idRestoran;
-    }
-
-    public Integer getRating() {
-        return rating;
-    }
-
-    public void setRating(Integer rating) {
-        this.rating = rating;
-    }
-
-    public List<MenuModel> getListMenu() {
-        return listMenu;
-    }
-
-    public void setListMenu(List<MenuModel> listMenu) {
-        this.listMenu = listMenu;
-    }
-
     public Long getIdRestoran() {
         return idRestoran;
+    }
+
+    public void setIdRestoran(Long idRestoran) {
+        this.idRestoran = idRestoran;
     }
 
     public String getNama() {
@@ -81,5 +69,13 @@ public class RestoranModel implements Serializable {
 
     public void setNomorTelepon(Integer nomorTelepon) {
         this.nomorTelepon = nomorTelepon;
+    }
+
+    public List<MenuModel> getListMenu() {
+        return listMenu;
+    }
+
+    public void setListMenu(List<MenuModel> listMenu) {
+        this.listMenu = listMenu;
     }
 }

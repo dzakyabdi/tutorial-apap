@@ -1,6 +1,7 @@
 package apap.tutorial.gopud.controller;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import apap.tutorial.gopud.model.MenuModel;
 import apap.tutorial.gopud.service.MenuService;
@@ -23,7 +24,9 @@ public class RestoranController {
     private MenuService menuService;
 
     @RequestMapping("/")
-    public String home() { return "home"; }
+    public String home(){
+        return "home";
+    }
 
     //URL mapping yang digunakan untuk mengakses halaman add restoran
     @RequestMapping(value = "/restoran/add", method = RequestMethod.GET)
@@ -33,7 +36,7 @@ public class RestoranController {
         return "form-add-restoran";
     }
 
-    //URL Mapping yang digunakan untuk submit form yang telah anda masukkan pada halaman add restoran
+    //URL mapping yang digunakan untuk submit form yang telah anda masukkan pada halaman add restoran
     @RequestMapping(value = "/restoran/add", method = RequestMethod.POST)
     public String addRestoranSubmit(@ModelAttribute RestoranModel restoran, Model model) {
         restoranService.addRestoran(restoran);
@@ -46,74 +49,72 @@ public class RestoranController {
     public String view(
             //Request Parameter untuk dipass
             @RequestParam(value = "idRestoran") Long idRestoran, Model model
-            ){
+    ) {
 
         //Mengambil objek RestoranModel yang dituju
         RestoranModel restoran = restoranService.getRestoranByIdRestoran(idRestoran).get();
 
+        List<MenuModel> menuList = menuService.getListMenuOrderByHargaAsc(restoran.getIdRestoran());
+        restoran.setListMenu(menuList);
+
         //Add model restoran ke "resto" untuk dirender
         model.addAttribute("resto", restoran);
-
-        List<MenuModel> menuList = menuService.findAllMenuByIdRestoran(restoran.getIdRestoran());
-        model.addAttribute("menuList", menuList);
 
         //Return view template
         return "view-restoran";
     }
 
+    //URL Mapping viewAll
+    @RequestMapping(value="/restoran/view-all")
+    public String viewAll(Model model) {
+
+        //Mengambil data semua objek restoran yang ada
+        List<RestoranModel> restoranList = restoranService.getRestoranList();
+
+        //Add objek restoran ke "restoranList" untuk dirender
+        model.addAttribute("restoranList", restoranList);
+
+        //Return view template view-all-store
+        return "viewall-restoran";
+
+    }
+
+
     //API yang digunakan untuk menuju halaman form change restoran
-    @RequestMapping(value = "restoran/change/{idRestoran}", method = RequestMethod.GET)
+    @RequestMapping(value="restoran/change/{idRestoran}", method = RequestMethod.GET)
     public String changeRestoranFormPage(@PathVariable Long idRestoran, Model model) {
-        //Memanggil existing data restoran
+        //Mengambil existing data restoran
         RestoranModel existingRestoran = restoranService.getRestoranByIdRestoran(idRestoran).get();
         model.addAttribute("restoran", existingRestoran);
         return "form-change-restoran";
-    }
 
-    //API yang digunakan untuk submit form change restoran
-    @RequestMapping(value = "restoran/change/{idRestoran}", method = RequestMethod.POST)
+    }
+    //API yang digunakan untuk submit form change resetoran
+    @RequestMapping(value="restoran/change/{idRestoran}", method = RequestMethod.POST)
     public String changeRestoranFormSubmit(@PathVariable Long idRestoran, @ModelAttribute RestoranModel restoran, Model model) {
+        System.out.println(restoran.getAlamat());
         RestoranModel newRestoranData = restoranService.changeRestoran(restoran);
         model.addAttribute("restoran", newRestoranData);
 
         return "change-restoran";
     }
 
-    //URL mapping viewAll
-    @RequestMapping(value = "/restoran/view-all")
-    public String viewall(Model model) {
-
-        //Mengambil semua objek RestoranModel yang ada
-        List<RestoranModel> listRestoran = restoranService.getRestoranList();
-
-        //Add model restoran ke "resto" untuk dirender
-        model.addAttribute("restoList", listRestoran);
-
-        //Return view template
-        return "viewall-restoran";
-    }
-
     //URL mapping delete
-    @RequestMapping("/restoran/delete/id/{idRestoran}")
+    @RequestMapping("/restoran/delete/{idRestoran}")
     public String delete(
             //Request parameter untuk dipass
-            @PathVariable("idRestoran") String idRestoran, Model model
-            ) {
+            @PathVariable("idRestoran") Long idRestoran, Model model
+    ) {
 
-        //Mengambil semua objek RestoranModel yang ada
-        List<RestoranModel> listRestoran = restoranService.getRestoranList();
-
-        //Mencari restoran dengan id sesuai input
-        for(int i = 0; i < listRestoran.size(); i++) {
-            if(listRestoran.get(i).getIdRestoran().equals(idRestoran)) {
-                listRestoran.remove(i);
-            }
+        try{
+            restoranService.deleteRestoran(idRestoran);
+        }catch (NoSuchElementException e){
+            model.addAttribute("errorMessage", "Id " +  idRestoran.toString() + " tidak ditemukan");
+            return "delete-restoran-error";
+        }catch (UnsupportedOperationException e){
+            model.addAttribute("errorMessage", "Tidak berhasil dihapus karena restoran memiliki menu!");
+            return "delete-restoran-error";
         }
-
-        //Add variabel id restoran ke "idRestoran" untuk dirender
-        model.addAttribute("idRestoran", idRestoran);
-
-        //Return view template
         return "delete-restoran";
     }
 }
