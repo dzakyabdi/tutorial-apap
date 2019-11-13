@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymelaf.org">
+<html  xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5" xmlns:th="http://www.thymelaf.org">
 
 <head>
     <title> Home </title>
@@ -12,7 +12,9 @@
 <nav th:replace="fragments/fragment :: navbar"></nav>
 
 <div class="container-fluid">
+    <h2 th:text="'Hello ' + ${#httpServletRequest.remoteUser} + '!'">Login as</h2>
     <h2>Selamat datang di GOPUD! </h2>
+
     <button class="btn btn-primary">
         <a th:href="@{restoran/view-all}" style="color: white"> View All Restoran </a>
     </button>
@@ -43,6 +45,60 @@
                         <button class="btn btn-primary" type="submit"> Cari </button>
                     </form>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Tambah user baru-->
+<div class="row" sec:authorize="hasAuthority('ADMIN')">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">Tambah User Baru</div>
+            <div class="card-body">
+                <form th:action="@{/user/addUser}" method="POST">
+                    <label> User Name </label>
+                    <input type="text" name="username" class="form-control"/>
+
+                    <label> Password </label>
+                    <input type="password" name="password" class="form-control"/>
+
+                    <label> Role </label>
+                    <select name="role" class="form-control">
+                        <option selected value="">-- Pilih Role --</option>
+                        <option th:each="roleAvailable : ${listRole}" th:value="${roleAvailable.id}" th:text="${roleAvailable.role}"></option>
+                    </select>
+
+                    <br>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">Update password</div>
+            <div class="card-body">
+                <form th:action="@{/changePassword}" method="GET">
+                    <label> Password Lama </label>
+                    <input type="password" name="passwordLama" class="form-control"/>
+
+                    <label> Password Baru </label>
+                    <input type="password" name="passwordBaru" class="form-control"
+                           pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{10,}$"
+                           title="Must contain at least one number and one letter, and at least 10 or more characters" required/>
+
+                    <label> Konfirmasi Password Baru </label>
+                    <input type="password" name="passwordBaruConfirm" class="form-control"
+                           pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{10,}$"
+                           title="Must contain at least one number and one letter, and at least 10 or more characters" required/>
+
+                    <br>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                </form>
             </div>
         </div>
     </div>
