@@ -16,13 +16,17 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
                 .antMatchers("/css/**").permitAll()
                 .antMatchers("/js/**").permitAll()
-                .antMatchers("/restoran/**").hasAnyAuthority("MERCHANT")
+                .antMatchers("/restoran/**").hasAnyAuthority("MERCHANT", "ADMIN")
+                .antMatchers("/menu/**").hasAnyAuthority("MERCHANT")
+                .antMatchers("/add/user").hasAnyAuthority("ADMIN")
+                .antMatchers("/api/v1").hasAnyAuthority("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

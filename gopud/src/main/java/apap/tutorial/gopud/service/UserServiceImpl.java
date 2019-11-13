@@ -3,6 +3,7 @@ package apap.tutorial.gopud.service;
 import apap.tutorial.gopud.model.UserModel;
 import apap.tutorial.gopud.repository.UserDb;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -24,5 +25,16 @@ public class UserServiceImpl implements UserService {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String hashedPassword = passwordEncoder.encode(password);
         return hashedPassword;
+    }
+
+    @Override
+    public UserModel getUserByUsername(String username) {
+        return userDb.findByUsername(username);
+    }
+
+    @Override
+    public UserModel changePassword(UserModel user, String password) {
+        user.setPassword(encrypt(password));
+        return userDb.save(user);
     }
 }
