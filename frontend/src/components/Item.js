@@ -21,9 +21,9 @@ export default function Item(props) {
         hidden = {!checked }
         />   <
         h5 className = "mb-1" > { nama } < /h5>   <
-        small > RP { harga } < /small>   <
-        /div >  <
-        p className = "mb-1" > { deskripsi } < /p>   <
-        /button >
+        small > RP { harga } < /small>   < /
+        div > <
+        p className = "mb-1" > { deskripsi } < /p>   < /
+        button >
     );
 }

@@ -15,8 +15,8 @@ export default function List({ title, items, onItemClick }) {
                 />
             ))
         } <
-        /div>   <
-        />
+        /div>   < /
+        >
     );
 }
 

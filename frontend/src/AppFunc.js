@@ -35,8 +35,8 @@ function App() {
         h1 className = "text-center" >
         Welcome!
         <
-        small > Functional < / small > < /
-        h1 > <
+        small > Functional < /small>  <
+        /h1>  <
         div className = "container pt-3" >
         <
         div className = "row" >
@@ -46,18 +46,18 @@ function App() {
         List title = "Our Menu"
         items = { dummyItems }
         onItemClick = { handleItemClick }
-        /> < /
-        div > <
+        /> <
+        /div>  <
         div className = "col-sm" >
         <
         List title = "My Favorite"
         items = { favItems }
         onItemClick = { handleItemClick }
-        /> < /
-        div > <
-        / div > < /
-        div > <
-        / div >
+        />  <
+        /div>  <
+        /div>  <
+        /div>  <
+        /div>
     );
 }
 

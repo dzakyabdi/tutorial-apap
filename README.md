@@ -206,3 +206,9 @@ UserDetailsServiceImpl.java berguna untuk membangun autentikasi user. didalam cl
 Class ini akan menghasilkan UserDetail object yang akan memberikan informasi terkait user yang terdapat dari db
 dan juga memberikan otorisasi yang dimiliki user sesuai dengan role yang dimiliki. Sedangkan UserServiceImpl digunakan untuk mengatur mapping yang dilakukan user
 
+## Tutorial 6
+1. Jelaskan apa yang Anda lakukan di latihan dalam satu paragraf per-soal. Berikan screenshot
+sebagai ilustrasi dari apa yang Anda jelaskan
+
+Latihan 1 : Pada komponen Item saya menyembunyikan checkbox yang sebelumnya dipasang untuk setiap item menu, sehingga ketika di render tidak ada checkboxnya
+
