@@ -84,9 +84,7 @@
             <div class="card-body">
                 <form th:action="@{/changePassword}" method="GET">
                     <label> Password Lama </label>
-                    <input type="password" name="passwordLama" class="form-control"
-                           pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{10,}$"
-                           title="Must contain at least one number and one letter, and at least 10 or more characters" required/>
+                    <input type="password" name="passwordLama" class="form-control"/>
 
                     <label> Password Baru </label>
                     <input type="password" name="passwordBaru" class="form-control"
