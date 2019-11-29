@@ -21,6 +21,9 @@ public class UserController {
 
     @RequestMapping(value = "/addUser", method = RequestMethod.POST)
     private String addUserSubmit(@ModelAttribute UserModel user) {
+        System.out.println("ini username : " + user.getUsername());
+        System.out.println("ini password : " + user.getPassword());
+        System.out.println("ini uuid : " + user.getId());
         userRoleService.addUser(user);
         return "home";
     }
