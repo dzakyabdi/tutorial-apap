@@ -211,3 +211,13 @@ dan juga memberikan otorisasi yang dimiliki user sesuai dengan role yang dimilik
 sebagai ilustrasi dari apa yang Anda jelaskan
 
 Latihan 1 : Pada komponen Item saya menyembunyikan checkbox yang sebelumnya dipasang untuk setiap item menu, sehingga ketika di render tidak ada checkboxnya
+
+## Tutorial 9
+1. Ceritakan langkah - langkah yang kalian lakukan untuk solve LATIHAN no.1 dan mengapa kalian melakukan langkah - langkah tersebut?
+
+menambahkan 1 line cone pada Restorans.js pada async AddRestoran dengan  this.setState({nama: "",alamat: "", nomorTelepon: "",rating: ""});
+
+2. Jelaskan fungsi dari async dan await !
+3. Masukkan jawaban dari TODO (Screenshot) pada Component Lifecycle pada pertanyaan ini.
+4. Jelaskan fungsi dari componentDidMount, shouldComponentUpdate, componentDidUpdate, componentWillReceiveProps, componentWillUnmount.
+Notes : Penjelasan harus mencantumkan “kapan fungsi dipanggil” dan “ use case apa saja yang biasanya menggunakan lifecycle method tersebut”.
